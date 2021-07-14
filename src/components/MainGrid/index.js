@@ -4,7 +4,6 @@ const MainGrid = styled.main`
   margin-left: auto;
   margin-right: auto;
   max-width: 500px;
-  display: grid;
   grid-gap: 10px;
   padding: 16px;
   .profileArea {
@@ -15,6 +14,8 @@ const MainGrid = styled.main`
   }
 
   @media(min-width: 860px) {
+    max-width: 1100px;
+    display: grid;
     grid-template-areas: "profileArea welcomeArea profileRelationsArea";
     grid-template-column: 160px 1fr 312px;
 
