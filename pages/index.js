@@ -20,6 +20,31 @@ function ProfileSidebar(propriedades) {
   )
 }
 
+function ProfileRelationsBox(propriedades) {
+  return (
+    <ProfileRelationsBoxWrapper>
+        <h2 className='smallTitle'>
+          {propriedades.title} ({propriedades.items.length})
+        </h2>
+        <ul>
+          {/* {seguidores.map((itemAtual) => {
+            return (
+              <li key={itemAtual}>
+
+                <a href={`http://github.com/${itemAtual}`}>
+                  <img src={itemAtual} />
+                  <span>{itemAtual}</span>
+                </a>
+
+              </li>
+            )
+          })} */}
+
+        </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 
 export default function Home() {
   const [comunidades, setComunidades] = React.useState([{
@@ -36,6 +61,17 @@ export default function Home() {
     'marcobrunodev'
   
   ]
+  const [seguidores, setSeguidores] = React.useState([]);
+  // 0 - pegar os arrays de dados do github
+  React.useEffect(function() {
+      fetch('https://api.github.com/users/alex22stein/followers')
+      .then(function (respostaDoServidor) {
+        return respostaDoServidor.json();
+      })
+      .then(function (respostaConvertida) {
+        setSeguidores(respostaConvertida);
+      }) 
+  }, [])
   
   return (
     <>
@@ -44,7 +80,8 @@ export default function Home() {
 
         <div className="profileArea" style= {{ gridArea: 'profileArea'}}>
 
-        <ProfileSidebar githubUser= {usuarioGithub}/>
+          <ProfileSidebar githubUser= {usuarioGithub}/>
+        
 
         </div>
 
@@ -91,19 +128,18 @@ export default function Home() {
                     type="text"
                     />
             </div>
-
             <button>
               Publicar
             </button>
-
           </form>
 
-
         </Box>
-
         </div>
 
-        <div className="profileRelationsAre" style= {{ gridArea: 'profileRelationsArea'}}>
+        <div className="profileRelationsArea" style= {{ gridArea: 'profileRelationsArea'}}>
+
+         
+        <ProfileRelationsBox title="Seguidores" items={seguidores}/>
 
         <ProfileRelationsBoxWrapper>
           <h2 className='smallTitle'>
